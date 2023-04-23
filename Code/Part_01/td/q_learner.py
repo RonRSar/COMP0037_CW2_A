@@ -43,23 +43,29 @@ class QLearner(TDController):
 
         # Q-learning update rule:
         # Q(s, a) <- Q(s, a) + alpha * (r + gamma * max_a' Q(s', a') - Q(s, a))
+
         for i in range(episode._number_of_steps - 1):
 
-            s = episode.state(i)  # current state
+            s = episode.state(i).coords()  # current state
             a = episode.action(i)  # current action
             r = episode.reward(i)  # current reward
-            s_next = episode.state(i + 1)  # next state
+            
+            for i in range(episode.number_of_steps() - 1, -1, -1):
+
+                # self._Q[state[0], state[1], a] 
+                
+                # Update the action
+                q_vals = self._Q[s[0], s[1], a]
+                a_max = np.argmax(q_vals)
 
             # Q-value with max Q-value of next state-action pair
-            q_target = r + self._gamma * max(self._Q[s_next])  
-
+            q_target = r + self._gamma * a_max
+                                                     
             # current Q-value for the current state-action pair
-            q_current = self._q[s][a]  
+            q_current = self._Q[s[0], s[1], a]
 
             # Update Q-value using learning rate and Q-learning update rule
             new_q = q_current + self.alpha() * (q_target - q_current)
-
-            self._update_q_and_policy(s, a, new_q)  # Update Q-value and policy
-        
-        pass
-        
+            self._update_q_and_policy(s, a, new_q)  
+            
+            pass
