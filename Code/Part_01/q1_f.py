@@ -55,7 +55,7 @@ if __name__ == '__main__':
         td_predictors[i].set_target_policy(pi)
         td_drawers[i] = ValueFunctionDrawer(td_predictors[i].value_function(), drawer_height)
         
-    for e in range(400):
+    for e in range(40):
         for i in range(num_values):
             td_predictors[i].evaluate()
             td_drawers[i].update()        
@@ -64,6 +64,6 @@ if __name__ == '__main__':
     
     for i in range(num_values):
         td_drawers[i].update()
-        td_drawers[i].save_screenshot(f"td-{int(alpha_values[i]*10):03}-pe.pdf")
+        td_drawers[i].save_screenshot(f"td-{alpha_values[i]*100}-pe.pdf")
     
     

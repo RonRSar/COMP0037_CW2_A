@@ -43,7 +43,7 @@ if __name__ == '__main__':
     
     # Off policy MC predictors
     
-    epsilon_b_values = [0.1, 0.2, 0.5, 1.0]
+    epsilon_b_values = [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1.0]
     
     num_values = len(epsilon_b_values)
     
@@ -67,4 +67,4 @@ if __name__ == '__main__':
        
     v_pe.save_screenshot("q1_c_truth_pe.pdf")
     for i in range(num_values):
-        mc_drawers[i].save_screenshot(f"mc-off-{int(epsilon_b_values[i]*10):03}-pe.pdf")
+        mc_drawers[i].save_screenshot(f"mc-off-{int(epsilon_b_values[i]*100)}-pe.pdf")
