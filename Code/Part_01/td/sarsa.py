@@ -39,7 +39,7 @@ class SARSA(TDController):
         # the greedy policy and estimated state value function
         
         # stop before the final state of the episode since this is the terminal state
-        for i in range(episode._number_of_steps - 1):
+        for i in range(episode._number_of_steps):
 
             # get the state, action and reward for the current step of the episode
             current_state = episode.state(i)
@@ -52,9 +52,12 @@ class SARSA(TDController):
             xy = current_state.coords()
             old_Q = self._Q[xy[0], xy[1], current_action]
 
-            # get the coords of the next state and the value of Q at the next state 
-            next_xy = next_state.coords()
-            next_Q = self._Q[next_xy[0], next_xy[1], next_action]
+            # get the coords of the next state and the value of Q at the next state
+            if next_state == None:
+                next_Q = 0
+            else:
+                next_xy = next_state.coords()
+                next_Q = self._Q[next_xy[0], next_xy[1], next_action]
 
             # calculate the new value of Q 
             error = current_reward + self.gamma() * next_Q - old_Q
