@@ -7,6 +7,8 @@ Created on 9 Mar 2023
 '''
 
 import math
+import time
+import matplotlib.pyplot as plt
 
 from common.scenarios import corridor_scenario
 
@@ -47,11 +49,24 @@ if __name__ == '__main__':
     value_function_drawer = ValueFunctionDrawer(policy_learner.value_function(), drawer_height)    
     greedy_optimal_policy_drawer = LowLevelPolicyDrawer(policy_learner.policy(), drawer_height)
     
+    duration = []
     for i in range(40):
         print(i)
+        start = time.time()
         policy_learner.find_policy()
         value_function_drawer.update()
         greedy_optimal_policy_drawer.update()
         pi.set_epsilon(1/math.sqrt(1+0.25*i))
+        stop = time.time()
+        duration.append(stop-start)
+        print(f"time={duration[i]}")
         print(f"epsilon={1/math.sqrt(1+i)};alpha={policy_learner.alpha()}")
-        
+
+fig = plt.figure()
+ax = fig.add_subplot()
+ax.set_title("Time of Episodes per Iteration")
+ax.set_xlabel("Iteration")
+ax.set_ylabel("Time(s)")
+ax.plot(duration)
+fig.show()
+input()
