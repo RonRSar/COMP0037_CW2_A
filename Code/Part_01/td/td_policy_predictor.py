@@ -57,11 +57,10 @@ class TDPolicyPredictor(TDAlgorithmBase):
         #
         # self._v.set_value(x_cell_coord, y_cell_coord, new_v)
 
-        for i in range(episode._number_of_steps - 1):
+        for i in range(episode._number_of_steps):
 
             # get the state, action and reward for the current step of the episode
             current_state = episode.state(i)
-            current_action = episode.action(i)
             current_reward = episode.reward(i)
             next_state = episode.state(i+1)
 

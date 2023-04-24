@@ -58,11 +58,16 @@ if __name__ == '__main__':
     v_renderers[1] = ValueFunctionDrawer(learners[1].value_function(), drawer_height)    
     p_renderers[1] = LowLevelPolicyDrawer(learners[1].policy(), drawer_height)
 
-    for i in range(10000):
+    for i in range(1000):
         print(i)
         for l in range(2):
             learners[l].find_policy()
             v_renderers[l].update()
             p_renderers[l].update()
             pi[l].set_epsilon(1/math.sqrt(1+0.25*i))
+            
+    v_renderers[0].save_screenshot(f"2h_sarsa_value_1000.pdf")
+    p_renderers[0].save_screenshot(f"2h_sarsa_policy_1000.pdf")
+    v_renderers[1].save_screenshot(f"2h_qlearner_value_1000.pdf")
+    p_renderers[1].save_screenshot(f"2h_qlearner_policy_1000.pdf")
         
